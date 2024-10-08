@@ -1,0 +1,39 @@
+.chat-container {
+  height: 100vh; /* Full screen height */
+  display: flex;
+  flex-direction: column;
+}
+
+.message-box {
+  flex-grow: 1;
+  overflow-y: auto;
+  /* Ensures messages can scroll when overflowing */
+}
+
+.messages-container {
+  flex-grow: 1;
+  /* Ensures messages are scrollable */
+}
+
+.input-group {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  z-index: 10; /* Ensure it stays above the content */
+}
+.sticky-header {
+  position: sticky; /* Makes the header sticky */
+  top: 0; /* Sticks the header to the top */
+  background-color: white; /* Set a background color */
+  z-index: 1; /* Ensures the header is above other content */
+  padding: 10px; /* Add some padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a nicer look */
+}
+/* .messages-container {
+  max-height: 00px;  
+} */
+
+#scrollContent {
+  height: 300px; /* Set a fixed height */
+  overflow-y: auto; /* Allow vertical scrolling */
+}

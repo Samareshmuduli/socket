@@ -1,0 +1,30 @@
+
+<div class="sidebar bg-light h-100">
+  <div class="ps-4 pe-3">
+
+    <div class="sticky-input">
+      <h2>{{currentUser}}</h2>
+      <!-- <input class="form-control " type="text" placeholder="Search or start new chat"> -->
+      <input
+      class="form-control"
+      type="text"
+      placeholder="Search or start new chat"
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"      
+    >
+    </div>
+    <ul class="list-group list-unstyled">
+
+      <li class="nav-item " *ngFor="let user of users; index as i;">
+        <div [ngClass]="{'selected-user': selectedUser === user.username}" (click)="selectUser(user)"
+          class="user-item list-group-item d-flex  align-items-center ">
+          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+          <a  class="nav-link" >
+            <h5> {{ user.username }}</h5>
+            <div>{{user?.latestMessage?.message}}</div>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

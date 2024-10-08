@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-welcome',
+  standalone: true,
+  imports: [],
+  templateUrl: './welcome.component.html',
+  styleUrl: './welcome.component.css'
+})
+export class WelcomeComponent {
+  userName: string |null = '';
+
+  ngOnInit(): void {
+    this.userName = localStorage.getItem('username') ; 
+  }
+}

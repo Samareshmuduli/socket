@@ -1,0 +1,40 @@
+@if(flag===true){
+<div class="chat-container d-flex flex-column h-100">
+  <div class="message-box d-flex flex-column flex-grow-1">
+    <div class="sticky-header">
+      <h5>{{ selectedUser?.username }}</h5>
+    </div>
+    <div class="messages-container" id="scrollContent" #messagesContainer>
+      <div *ngFor="let message of messageList" 
+           [ngClass]="{'justify-content-end': currentUserId == message?.senderId , 'justify-content-start': currentUserId != message?.senderId}" 
+           class="d-flex">
+        <div class="message p-2 my-2" 
+             [ngClass]="{'bg-primary text-white': message.isSentByCurrentUser, 'bg-light': !message.isSentByCurrentUser}">
+          <li class="list-unstyled">
+            {{ message?.message }}
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group p-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Type a message..."
+      [(ngModel)]="newMessage" 
+      (keyup)="onKeyUp($event)" />
+    <button class="btn btn-primary" (click)="sendMessage(); scrollToBottom()">Send</button>
+  </div>
+</div>
+}@else{
+  <div class="welcome-container d-flex justify-content-center align-items-center vh-100">
+    <div class="welcome-card text-center shadow-lg p-5 rounded">
+      <h1 class="display-4 text-primary">Welcome, {{ currentUserName }}!</h1>
+      <p class="lead text-muted">We're glad to have you back in the chart application.</p>    
+    </div>
+  </div>
+  <!-- fgdgfdhbg -->
+}
+<!-- dataStore();  -->
