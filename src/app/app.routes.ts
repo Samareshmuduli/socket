@@ -5,9 +5,10 @@ import { HeaderComponent } from './header/header.component';
 import { ChartShowComponent } from './chart-show/chart-show.component';
 import { RegisterComponent } from './register/register.component';
 import { authGuard } from './auth.guard';
+import { logGurdGuard } from './log-gurd.guard';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent ,canActivate:[logGurdGuard]},
     { path: 'register', component: RegisterComponent },
     {path:'',redirectTo:"/login",pathMatch:'full'},
     { path: 'showUsers', component: ShowUsersComponent },

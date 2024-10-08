@@ -11,7 +11,7 @@ import { io } from 'socket.io-client';
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.css']  // Fixed the styleUrl to style**s**Url
 })
-export class MessageBoxComponent implements OnInit, AfterViewChecked {
+export class MessageBoxComponent  {
   messageList: any = [];
   message: any;
   newMessage: string = '';
@@ -66,9 +66,9 @@ export class MessageBoxComponent implements OnInit, AfterViewChecked {
    * @Author - Samaresh
    * @date - Oct 07, 2024
    */
-  ngAfterViewChecked() {
-    // this.scrollToBottom(); // Scroll after every view check to ensure it's at the bottom
-  }
+  // ngAfterViewChecked() {
+  //   // this.scrollToBottom(); // Scroll after every view check to ensure it's at the bottom
+  // }
    /**
    * @desc This function scrolls the message container to the bottom.
    * @Author - Samaresh
