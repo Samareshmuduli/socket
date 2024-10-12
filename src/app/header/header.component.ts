@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./header.component.css'] // Fixed typo here
 })
 export class HeaderComponent {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService, private router: Router) { }
 
   /**
    * @desc This function handles the logout functionality. 
@@ -20,7 +20,9 @@ export class HeaderComponent {
    */
   logout() {
     localStorage.clear();
-    // this.toastr.success('Logout Successful', 'Success'); // This should now work
+    
+    this.toastr.success('Logout Successful'); // Make sure the message is clear
     this.router.navigate(['/login']);
   }
+  
 }

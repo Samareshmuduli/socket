@@ -32,6 +32,7 @@ export class DataService {
   constructor(private http:HttpClient) { }
 
 
+  
   /**
    * @desc Logs in a user by sending a POST request to the server.
    * @param user :any - Login details (username, password)
@@ -74,19 +75,20 @@ export class DataService {
    * @Author - Samaresh
    * @date - Oct 07, 2024
    */
-  public sendMessage(message: any,) {
-    console.log('sendMessage: ', message)
-    let socket = io('http://localhost:3000',{
-      query: {
-        userId: localStorage.getItem('id')
-      }
-    });
-    // let datatToSend = {
-    //   name: 'Samaresh',
-    //   message
-    // }
-    // socket.emit('message', datatToSend);
-  }
+  // public sendMessage(message: any,) {
+  //   console.log('sendMessage: ', message)
+  //   let socket = io('http://localhost:3000',{
+  //     query: {
+  //       userId: localStorage.getItem('id')
+  //     }
+  //   });
+  //   // let datatToSend = {
+  //   //   name: 'Samaresh',
+  //   //   message
+  //   // }
+  //   // socket.emit('message', datatToSend);
+  // }
+  
   
   /**
    * @desc Listens for new messages from the server using Socket.IO.
@@ -104,7 +106,7 @@ export class DataService {
     });
 
     socket.on('message', (message) =>{
-      console.log('messagesssssssssssssss', message)
+      console.log('messageeeeeee', message)
       this.message$.next(message);
       console.log('hello recive',message)
     });

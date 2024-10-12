@@ -22,7 +22,6 @@ export class MessageBoxComponent  {
   isCallOfferReceived: boolean = false;
   currentReceiverId: any;
   flag:boolean=false;
-  mess:string='';
   // @ViewChild('messagesContainer') private messagesContainer!: ElementRef; // Get reference to the message container
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
@@ -38,6 +37,7 @@ export class MessageBoxComponent  {
    * @date - Oct 07, 2024
    */
   ngOnInit(): void {
+    // this.getNotification()
     this.currentUserId = localStorage.getItem('id');
     this.currentReceiverId = localStorage.getItem('reciverId');
     
@@ -60,29 +60,19 @@ export class MessageBoxComponent  {
     });
 
     this.dataService.getNewMessage().subscribe((messages: any) => {
-       this.mess=messages.message;
       if (messages) {
-        this.getNotification()
         console.log('New message:', messages);
         if (messages.senderId == this.selectedUser._id) {
           this.messageList.push(messages);
           this.scrollToBottom();  // Scroll to bottom after receiving a new message
         }
+        console.log("logogogoogog");
+        
+        // this.getNotification()
       }
     });
 
-    
-    //  this.abc()
-    // Socket events for video call signaling
-    // this.socket.on('offer', (offer: RTCSessionDescriptionInit) => {
-    //   this.handleOffer(offer);
-    // });
-    // this.dataService.getNewMessage().subscribe((messages: any) => {
-// Listening for ICE candidate
-// this.socket.on('ice-candidate', (data) => {
-//   console.log('Received ICE candidate from socket:', data);
-//   this.handleNewICECandidate(data.candidate);
-// });
+    this.initialcall()
   }
 
   async getNotification() {
@@ -91,43 +81,13 @@ export class MessageBoxComponent  {
     if (permission === 'granted') {
       const notification = new Notification('title', {
         // icon: icon,
-        body: this.mess,
+        body: ,
       });
 
       notification.onclick = () => {
         window.open('http://localhost:4200/dashboard');
       };
     }
-  }
-
-  abc(){
-    let socket = io('http://localhost:3000',{
-      query: {
-        userId: localStorage.getItem('id')
-      }
-    });
-    
-    this.socket.on('offer', (data: { offer: RTCSessionDescriptionInit, receiverid: string }) => {
-      this.currentReceiverId = data.receiverid;
-     
-      this.handleOffer(data.offer);
-      console.log('data.offer==================', data.offer)
-    });
-   
-    this.socket.on('answer', (data: { answer: RTCSessionDescriptionInit; receiverid: string }) => {
-      // Adjust this line to get the receiverId if needed
-      this.currentReceiverId = data.receiverid; // Optional: if you want to keep track of receiverId
-      this.handleAnswer(data.answer); // Pass the answer to handleAnswer method
-      console.log('data.answer===================', data.answer)
-    });
-    
-    this.socket.on('ice-candidate', (data: { candidate: RTCIceCandidateInit; receiverid: string }) => {
-      // Optional: if you want to keep track of receiverId
-      console.log('Received ICE candidate from socket:', data);
-      this.currentReceiverId = data.receiverid; 
-      this.handleNewICECandidate(data.candidate); // Pass the candidate to handleNewICECandidate method
-      console.log('data.candidate===============', data.candidate)
-    });
   }
  /**
    * @desc This function is called after the view has been checked. It ensures the message list is scrolled to the bottom.
@@ -162,6 +122,37 @@ export class MessageBoxComponent  {
     }, 500);
   }
 
+  initialcall(){
+    let socket = io('http://localhost:3000',{
+      query: {
+        userId: localStorage.getItem('id')
+      }
+    });
+
+  
+    socket.on('offer', (data: { offer: RTCSessionDescriptionInit, receiverid: string }) => {
+        console.log('##########11111111', data.offer)
+        this.currentReceiverId = data.receiverid;
+        this.isCallOfferReceived = true;
+       
+        this.handleOffer(data.offer);
+      });
+      socket.on('answer', (data: { answer: RTCSessionDescriptionInit; receiverid: string }) => {
+        // Adjust this line to get the receiverId if needed
+        this.currentReceiverId = data.receiverid; // Optional: if you want to keep track of receiverId
+        this.handleAnswer(data.answer); // Pass the answer to handleAnswer method
+        console.log('data.answer===================', data.answer)
+      });
+      
+      socket.on('ice-candidate', (data: { candidate: RTCIceCandidateInit; receiverid: string }) => {
+        // Optional: if you want to keep track of receiverId
+        console.log('Received ICE candidate from socket:', data);
+        this.currentReceiverId = data.receiverid; 
+        this.handleNewICECandidate(data.candidate); // Pass the candidate to handleNewICECandidate method
+        console.log('data.candidate===============', data.candidate)
+      });
+      
+  }
    // Function to accept the call offer
    acceptCall() {
     this.isCallOfferReceived = false; // Hide the modal
@@ -312,6 +303,7 @@ private async handleNewICECandidate(candidate: RTCIceCandidateInit) {
    * @date - Oct 07, 2024
    */
   sendMessage() {
+    
     let datatToSend = {
       receieverId: this.selectedUser._id,
       senderId: localStorage.getItem('id'),
